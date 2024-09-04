@@ -1,5 +1,7 @@
 package dataStructures.stack
 
+import dataStructures.stack.StackImpl.Companion.create
+
 interface Stack<T : Any> {
   fun push(element: T)
   fun pop(): T?
@@ -13,12 +15,8 @@ class StackImpl<T: Any> : Stack<T> {
 
   // static class member that helps in the creation of Stack objet
   companion object {
-    fun <T : Any> create(items: Iterable<T>): Stack<T> {
-      val stack = StackImpl<T>()
-      for (item in items) {
-        stack.push(item)
-      }
-      return stack
+    fun <T : Any> create(items: Iterable<T>) = StackImpl<T>().apply {
+      items.forEach { push(it) }
     }
   }
 
@@ -33,10 +31,12 @@ class StackImpl<T: Any> : Stack<T> {
   }
 
   // if storage is not empty, remove and return the last element of storage, else return null
-  override fun pop() = storage.takeIf { it.isNotEmpty() }?.removeAt(0)
+  override fun pop() = storage.takeIf { it.isNotEmpty() }?.removeAt(storage.size - 1)
 
   override fun peek() = storage.lastOrNull()
-
-  // analogous to the listOf creation function, makes Stack more ergonomic
-  fun <T : Any> stackOf(vararg elements: T) = create(elements.asList())
 }
+
+// analogous to the listOf creation function, makes Stack more ergonomic
+fun <T : Any> stackOf(vararg elements: T) = create(elements.asList())
+
+fun <T: Any> emptyStackOf() = create(mutableListOf())

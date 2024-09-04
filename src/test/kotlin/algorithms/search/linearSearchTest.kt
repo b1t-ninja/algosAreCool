@@ -1,6 +1,5 @@
 package algorithms.search
 
-import ninja.b1t.algorithms.search.linearSearch
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
