@@ -1,4 +1,4 @@
-package ninja.b1t.algorithms.search
+package algorithms.search
 
 fun <T: Comparable<T>> Collection<T>.binarySearch(target: T) = doBinarySearch(this, target, this.size - 1, 0)
 
