@@ -16,3 +16,17 @@ private tailrec fun <T: Comparable<T>> doBinarySearch(collection: Collection<T>,
     else -> null // |-- 2d
   }
 }
+
+tailrec fun <T: Comparable<T>> binarySearchPrint(collection: Collection<T>, target: T, low: Int, high: Int) {
+  if (low > high) return
+  val middle = (low + high) / 2
+  val middleValue = collection.elementAt(middle)
+  println(middleValue)
+
+  return when {
+    target == middleValue -> {}
+    target < middleValue -> binarySearchPrint(collection, target, low, middle - 1)
+    target > middleValue -> binarySearchPrint(collection, target, middle + 1, high)
+    else -> {}
+  }
+}
