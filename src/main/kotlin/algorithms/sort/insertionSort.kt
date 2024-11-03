@@ -1,15 +1,17 @@
 package ninja.b1t.algorithms.sort
 
-fun <T : Comparable<T>> MutableList<T>.insertionSort() = doInsertionSort(0)
+import ninja.b1t.extensions.swapAt
 
-private tailrec fun <T : Comparable<T>> MutableList<T>.doInsertionSort(start: Int) {
-  if (start >= size - 1) return // |-- 1
+fun <T : Comparable<T>> ArrayList<T>.insertionSort() {
+  if (size < 2) return
 
-  val current = this[start + 1] // |-- 2
-  val insertionIndex = (0..start).findLast { this[it] <= current } ?: -1 // |-- 3
+  (1 until size).forEach { index ->
+    val key = this[index]
+    var position = index
 
-  (start downTo insertionIndex + 1).forEach { this[it + 1] = this[it] } // |-- 4
-  this[insertionIndex + 1] = current // |-- 5
-
-  doInsertionSort(start + 1) // |-- 6
+    while (position > 0 && this[position - 1] > key) {
+      swapAt(position, position - 1)
+      position -= 1
+    }
+  }
 }

@@ -1,20 +1,19 @@
 package ninja.b1t.algorithms.sort
 
-fun <T> MutableList<T>.swap(i: Int, j: Int) {
-  val temp = this[i]
-  this[i] = this[j]
-  this[j] = temp
-}
+import ninja.b1t.extensions.swapAt
 
-fun <T: Comparable<T>> MutableList<T>.selectionSort() = doSelectionSort(0)
+fun <T : Comparable<T>> ArrayList<T>.selectionSort() {
+  if (size < 2) return
 
-// worker function
-private tailrec fun <T: Comparable<T>> MutableList<T>.doSelectionSort(start: Int) {
-  if (start >= size - 1) return  // |-- 1
+  (0 until size - 1).forEach { index ->
+    var smallestIndex = index
 
-  val minIndex = (start until size).minByOrNull { this[it] } ?: start // |-- 2
+    (index + 1 until size).forEach { innerIndex ->
+      if (this[innerIndex] < this[smallestIndex]) {
+        smallestIndex = innerIndex
+      }
+    }
 
-  if (minIndex != start) this.swap(start, minIndex) // |-- 3
-
-  doSelectionSort(start + 1) // |-- 4
+    swapAt(index, smallestIndex)
+  }
 }
